@@ -22,19 +22,16 @@ public class HelloClient {
 		bootstrap.connect(new InetSocketAddress("127.0.0.1", 8000));
 	}
 
-	private static class HelloClientHandler extends
-			ChannelInboundHandlerAdapter {
+	private static class HelloClientHandler extends ChannelInboundHandlerAdapter {
 
 		/**
 		 * 当绑定到服务端的时候触发，打印"Hello world, I'm client."
-		 * 
-		 * @alia OneCoder
-		 * @author lihzh
-		 * @date 2013年11月16日 上午12:50:47
 		 */
 		@Override
 		public void channelActive(ChannelHandlerContext ctx) throws Exception {
 			System.out.println("Hello world, I'm client.");
+			ctx.channel().writeAndFlush("xxx\r\n");
 		}
+		
 	}
 }

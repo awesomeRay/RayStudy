@@ -152,45 +152,14 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.funshion.commons</groupId>
-			<artifactId>backend</artifactId>
-			<version>0.0.1</version>
-		</dependency>
-
-		<dependency>
 			<groupId>com.esotericsoftware.kryo</groupId>
 			<artifactId>kryo</artifactId>
 			<version>2.24.0</version>
 		</dependency>
 		<dependency>
-			<groupId>com.funshion.commons</groupId>
-			<artifactId>backend</artifactId>
-			<version>0.0.21</version>
-		</dependency>
-		<dependency>
 			<groupId>commons-net</groupId>
 			<artifactId>commons-net</artifactId>
 			<version>3.3</version>
-		</dependency>
-		<dependency>
-			<groupId>com.funshion.sdk</groupId>
-			<artifactId>account-thrift</artifactId>
-			<version>0.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>com.funshion.sdk</groupId>
-			<artifactId>account-v3-thrift</artifactId>
-			<version>0.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>com.funshion.sdk</groupId>
-			<artifactId>media-thrift</artifactId>
-			<version>0.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>com.funshion.sdk</groupId>
-			<artifactId>nami-thrift</artifactId>
-			<version>0.0.8</version>
 		</dependency>
 		<dependency>
 			<groupId>io.netty</groupId>

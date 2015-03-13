@@ -1,17 +1,9 @@
 package nio;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.InetAddress;
-import java.net.Socket;
-
-import com.funshion.commons.utils.task.AbstractTask.TaskAdapter;
-import com.funshion.commons.utils.task.TaskExcepion;
-import com.funshion.commons.utils.task.TaskExecutor;
 
 public class 普通TCPClient {
 	public static void main(String []args) {
-		for (final String name : new String[]{"xxx", "yyy"}) {
+		/*for (final String name : new String[]{"xxx", "yyy"}) {
 			TaskExecutor.execut(new TaskAdapter() {
 				@Override
 				public void execute() throws TaskExcepion {
@@ -36,7 +28,7 @@ public class 普通TCPClient {
 					
 				}
 			});
-		}
+		}*/
 		
         
     }
