@@ -1,21 +1,15 @@
-package netty.stringio;
+package netty.objio;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelPipeline;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.DelimiterBasedFrameDecoder;
-import io.netty.handler.codec.Delimiters;
-import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
+import model.Person;
 
-public class HelloServer {
+public class ObjectServer {
 	 /**
      * 服务端监听的端口地址
      */
@@ -28,10 +22,8 @@ public class HelloServer {
             ServerBootstrap b = new ServerBootstrap();
             b.group(bossGroup, workerGroup);
             b.channel(NioServerSocketChannel.class);
-            // 只能
-            b.childHandler(new StringInitializer(new HelloServerHandler()));
-//            b.childHandler(new HelloServerInitializer());
-//            b.handler(new HelloServerInitializer());
+            // 只能有一个child handler吗
+            b.childHandler(new ObjectInitializer(new ObjectServerHandler()));
             // 服务器绑定端口监听
             ChannelFuture f = b.bind(portNumber).sync();
             // 监听服务器关闭监听， sync调用wait直到监听到连接关闭()？？？应该有notify结束此线程的无限循环wait
@@ -47,37 +39,23 @@ public class HelloServer {
     }
 }
 
-class HelloServerHandler extends SimpleChannelInboundHandler<String> {
+class ObjectServerHandler extends SimpleChannelInboundHandler<Person> {
 	@Override
-	protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
-		System.out.println("server get msg :"+ msg);
+	protected void channelRead0(ChannelHandlerContext ctx, Person msg) throws Exception {
+		System.out.println("server read0 :"+ msg);
 		ctx.writeAndFlush("i am server, i read your msg \n");
 	}
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
-		ctx.writeAndFlush("i am server, i am active\n");
+		System.out.println("server active");
+		ctx.writeAndFlush(new Person("server active", 1));
 		super.channelActive(ctx);
 	}
 	
-}
-
-class HelloServerInitializer extends ChannelInitializer<SocketChannel>{
-	
 	@Override
-	protected void initChannel(SocketChannel ch) throws Exception {
-		ChannelPipeline pipeline = ch.pipeline();
-		
-		// 以("\n") or ("\r\n")为结尾分割的 解码器
-		pipeline.addLast("framer", new DelimiterBasedFrameDecoder(8192, Delimiters.lineDelimiter()));
-		
-		// 字符串编解码
-		pipeline.addLast("decoder", new StringDecoder());
-		pipeline.addLast("encoder", new StringEncoder());
-		
-		// 逻辑handler
-		pipeline.addLast("handler", new HelloServerHandler());
-		
+	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+		System.out.println("server read:" + msg);
+		super.channelRead(ctx, msg);
 	}
-
 }

@@ -7,6 +7,7 @@
 		<springframework-version>3.2.2.RELEASE</springframework-version>
 		<webflow-version>2.4.0.M1</webflow-version>
 		<slf4j-version>1.7.5</slf4j-version>
+		<jackson-version>2.4.2</jackson-version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -166,7 +167,21 @@
 			<artifactId>netty-all</artifactId>
 			<version>4.1.0.Beta3</version>
 		</dependency>
-		
+		<dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson-version}</version>
+        </dependency>
 	</dependencies>
 	<build>
 		<pluginManagement>
