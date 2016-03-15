@@ -1,6 +1,7 @@
 package netty.objio;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.EventLoopGroup;
@@ -26,9 +27,9 @@ public class ObjectServer {
             b.childHandler(new ObjectInitializer(new ObjectServerHandler()));
             // 服务器绑定端口监听
             ChannelFuture f = b.bind(portNumber).sync();
+            Channel c = f.channel();
             // 监听服务器关闭监听， sync调用wait直到监听到连接关闭()？？？应该有notify结束此线程的无限循环wait
             f.channel().closeFuture().sync();
-
             // 可以简写为
             /* b.bind(portNumber).sync().channel().closeFuture().sync(); */
         } finally {
