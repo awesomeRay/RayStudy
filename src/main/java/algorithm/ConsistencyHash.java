@@ -46,6 +46,7 @@ public class ConsistencyHash {
 	public Object getShardInfo(long hash) {
 		Long key = hash;
 		SortedMap<Long, Object> tailMap = nodes.tailMap(key);
+		// 大于32bit的hash值 就拿firstKey 从而形成环
 		if (tailMap.isEmpty()) {
 			key = nodes.firstKey();
 		} else {
@@ -73,7 +74,7 @@ public class ConsistencyHash {
 		 * 1 取digest的第四个字节，左移24位
 		 * 2 第三个字节 ，左移16位 与1做或，表示字节拼接
 		 * 3 这样就把digest的前4个字节-32bit 截出来了，并且掉了个儿， 是一个 32bit环上的值
-		 * 4 nTime是虚拟节点的顺序，表示实际节点的第nTime个32bit,  MD5算法刚好得到16个字节，=4*4=nTime*每个vnode的hash byte数
+		 * 4 nTime是虚拟节点的顺序，表示实际节点的第nTime个32bit,  MD5算法刚好得到16个字节，=4*4=nTime*每个vnode的hash byte数 = 4个32bit = 4个hash值
 		 */
 		long rv = ((long) (digest[3 + nTime * 4] & 0xFF) << 24)
 				| ((long) (digest[2 + nTime * 4] & 0xFF) << 16)

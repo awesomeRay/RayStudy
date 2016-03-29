@@ -1,6 +1,6 @@
 import boto3
 
-clusterName = "AUTO_CLUSTER_" + "recover 03-05  play_content" 
+clusterName = "AUTO_CLUSTER_" + "computing all" 
 
 client = boto3.client('emr')
 client.run_job_flow(
@@ -35,31 +35,15 @@ client.run_job_flow(
 		},
         
         {
-            'Name': 'play_content',
+            'Name': 'all',
             'ActionOnFailure': 'TERMINATE_JOB_FLOW',
             'HadoopJarStep': {
                 'Jar': 's3://cn-north-1.elasticmapreduce/libs/script-runner/script-runner.jar',
                 'Args': [
-                    's3://fengxinzi-bucket01/emr_conf/compute-step/run.sh',
-                    '-j', 'ott.play.content.',
-                    '-s', '2016-03-05',
-                    '-e', '2016-03-05'
+                    's3://fengxinzi-bucket01/emr_conf/compute-step/run.sh'
                 ]
             }
-        },
-        {
-            'Name': 'play_req',
-            'ActionOnFailure': 'TERMINATE_JOB_FLOW',
-            'HadoopJarStep': {
-                'Jar': 's3://cn-north-1.elasticmapreduce/libs/script-runner/script-runner.jar',
-                'Args': [
-                    's3://fengxinzi-bucket01/emr_conf/compute-step/run.sh',
-                    '-j', 'ott.play.req.',
-                    '-s', '2016-03-05',
-                    '-e', '2016-03-05'
-                ]
-            }
-        },
+        }
         
     ],
     Applications=[

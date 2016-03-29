@@ -1,9 +1,14 @@
 package grammer.multithread;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -49,8 +54,52 @@ public class TestExecutor {
 			});
 		}
 	}
+	
+	public static void test4() throws Exception{
+		ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
+		cachedThreadPool.execute(new Runnable() {
+			public void run() {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				System.out.println(Thread.currentThread().getName());
+			}
+		});
+		cachedThreadPool.shutdown();
+		cachedThreadPool.execute(new Runnable() {
+			public void run() {
+				System.out.println("hello");
+			}
+		});
+		System.out.println(cachedThreadPool.isShutdown());
+		System.out.println(cachedThreadPool.isTerminated());
+	}
+	
+	public static void test5() throws Exception{
+		ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
+		Future<String> future = cachedThreadPool.submit(new Callable<String>() {
+			public String call() {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				return Thread.currentThread().getName();
+			}
+		});
+		cachedThreadPool.shutdown();
+		System.out.println(future.get());
+		System.out.println(cachedThreadPool.isShutdown());
+		System.out.println(cachedThreadPool.isTerminated());
+	}
 
-	public static void main(String[] args) {
-		test3();
+	public static void main(String[] args)throws Exception {
+//		test5();
+		ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
+		System.out.println(cachedThreadPool);
+		cachedThreadPool = Executors.newCachedThreadPool();
+		System.out.println(cachedThreadPool);
 	}
 }
